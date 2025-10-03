@@ -1,0 +1,7 @@
+# Ignore the experimental React app
+part1/
+
+# Node / React defaults
+node_modules/
+dist/
+.env
