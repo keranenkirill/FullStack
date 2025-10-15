@@ -1,34 +1,38 @@
 import { useState } from 'react'
 
 
-const Display = props => (
-  <div>
-    {props.text} {props.val}
-  </div>
-)
 const Button = (props) => (
   <button onClick={props.onClick}>
     {props.text}
   </button>
 )
 
-const All = (props) =>(
+const StatisticLine = (props) =>(
   <div>
-    All: {props.gval + props.bval + props.nval}
+    {props.text} {props.value}
   </div>
 )
 
-const Average = (props) =>(
-  <div>
-    Average: {(props.gval*1 + props.bval*(-1) + props.nval*0)/(props.gval + props.bval + props.nval)}
-  </div>
-)
+const Stats = (props) =>{
+  const all = props.gval + props.nval + props.bval
+  const avg = (props.gval*1 + props.bval*(-1) + props.nval*0)/(all)
+  const pstv = props.gval/all
 
-const Positive = (props) =>(
-  <div>
-    Positive: {(props.gval)/(props.gval + props.bval + props.nval)}
-  </div>
-)
+  if (props.gval + props.nval + props.bval === 0) {
+    return <StatisticLine text="No feedback given" />
+  }
+  return(
+    <div>
+      <StatisticLine text="good" value ={props.gval} />
+      <StatisticLine text="neutral" value ={props.nval} />
+      <StatisticLine text="bad" value ={props.bval} />
+
+      <StatisticLine text="All: " value ={all} />
+      <StatisticLine text="Average: " value ={avg} />
+      <StatisticLine text="Positive: " value ={pstv} />
+    </div>
+  )
+}
 
 
 const App = () => {
@@ -50,18 +54,6 @@ const App = () => {
     setBValue(newValue)
   }
 
-  /*returnit olis voinu tehokkaammin*/
-  if (goodval + neutval + badval === 0) {
-    return (
-    <div>
-      <p>Give Feedback</p>
-      <Button onClick={() => setGoodValue(goodval + 1)} text="G" />
-      <Button onClick={() => setNeutValue(neutval + 1)} text="N" />
-      <Button onClick={() => setBadValue(badval + 1)} text="B" />
-      <p>Statistics: No feedback given</p>
-    </div>)
-  }
-
   return (
     <div>
       <p>Give Feedback</p>
@@ -69,15 +61,9 @@ const App = () => {
       <Button onClick={() => setNeutValue(neutval + 1)} text="N" />
       <Button onClick={() => setBadValue(badval + 1)} text="B" />
       <p>Statistics:</p>
-    
-      <Display text="Good" val={goodval} />
-      <Display text="Neutral" val={neutval} />
-      <Display text="Bad" val={badval} />
-      <p></p>
-      <All gval={goodval} nval={neutval} bval={badval}/>
-      <Average gval={goodval} nval={neutval} bval={badval}/>
-      <Positive gval={goodval} nval={neutval} bval={badval}/>
-    </div>)  
+      <Stats gval={goodval} nval={neutval} bval={badval}/>
+    </div>
+  )
 }
 
 export default App
