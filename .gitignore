@@ -1,5 +1,10 @@
 # Ignore the experimental React app
+sandbox/
 part1/
+laskuri/
+laskuri_monimtil/
+tapaht_kas_revisited/
+funkt_pal_funkt/
 
 # Node / React defaults
 node_modules/
