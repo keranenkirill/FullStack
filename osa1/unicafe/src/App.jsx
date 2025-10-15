@@ -12,12 +12,21 @@ const Button = (props) => (
   </button>
 )
 
-/* täs vois kyl toteuttaa statsit paremmin*/
-const Stats = (props) =>(
+const All = (props) =>(
   <div>
-    <p>All: {props.gval + props.bval + props.nval}</p>
-    <p>Average: {(props.gval*1 + props.bval*(-1) + props.nval*0)/(props.gval + props.bval + props.nval)}</p>
-    <p>Positive: {props.gval/(props.gval + props.bval + props.nval)} </p>
+    All: {props.gval + props.bval + props.nval}
+  </div>
+)
+
+const Average = (props) =>(
+  <div>
+    Average: {(props.gval*1 + props.bval*(-1) + props.nval*0)/(props.gval + props.bval + props.nval)}
+  </div>
+)
+
+const Positive = (props) =>(
+  <div>
+    Positive: {(props.gval)/(props.gval + props.bval + props.nval)}
   </div>
 )
 
@@ -52,7 +61,9 @@ const App = () => {
       <Display text="Neutral" val={neutval} />
       <Display text="Bad" val={badval} />
       <p></p>
-      <Stats gval={goodval} nval={neutval} bval={badval}/>
+      <All gval={goodval} nval={neutval} bval={badval}/>
+      <Average gval={goodval} nval={neutval} bval={badval}/>
+      <Positive gval={goodval} nval={neutval} bval={badval}/>
     </div>
   )
 }
