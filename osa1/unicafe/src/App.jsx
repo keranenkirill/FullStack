@@ -8,9 +8,11 @@ const Button = (props) => (
 )
 
 const StatisticLine = (props) =>(
-  <div>
-    {props.text} {props.value}
-  </div>
+  <tr>
+    <td>{props.text}</td>
+    <td>{props.value}</td>
+  </tr>
+
 )
 
 const Stats = (props) =>{
@@ -19,18 +21,20 @@ const Stats = (props) =>{
   const pstv = props.gval/all
 
   if (props.gval + props.nval + props.bval === 0) {
-    return <StatisticLine text="No feedback given" />
+    return <p>No feedback given</p>
   }
   return(
-    <div>
-      <StatisticLine text="good" value ={props.gval} />
-      <StatisticLine text="neutral" value ={props.nval} />
-      <StatisticLine text="bad" value ={props.bval} />
+    <table>
+      <tbody>
+        <StatisticLine text="good" value ={props.gval} />
+        <StatisticLine text="neutral" value ={props.nval} />
+        <StatisticLine text="bad" value ={props.bval} />
 
-      <StatisticLine text="All: " value ={all} />
-      <StatisticLine text="Average: " value ={avg} />
-      <StatisticLine text="Positive: " value ={pstv} />
-    </div>
+        <StatisticLine text="All: " value ={all} />
+        <StatisticLine text="Average: " value ={avg} />
+        <StatisticLine text="Positive: " value ={pstv} />
+      </tbody>
+    </table>
   )
 }
 
