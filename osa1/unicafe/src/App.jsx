@@ -50,6 +50,18 @@ const App = () => {
     setBValue(newValue)
   }
 
+  /*returnit olis voinu tehokkaammin*/
+  if (goodval + neutval + badval === 0) {
+    return (
+    <div>
+      <p>Give Feedback</p>
+      <Button onClick={() => setGoodValue(goodval + 1)} text="G" />
+      <Button onClick={() => setNeutValue(neutval + 1)} text="N" />
+      <Button onClick={() => setBadValue(badval + 1)} text="B" />
+      <p>Statistics: No feedback given</p>
+    </div>)
+  }
+
   return (
     <div>
       <p>Give Feedback</p>
@@ -57,6 +69,7 @@ const App = () => {
       <Button onClick={() => setNeutValue(neutval + 1)} text="N" />
       <Button onClick={() => setBadValue(badval + 1)} text="B" />
       <p>Statistics:</p>
+    
       <Display text="Good" val={goodval} />
       <Display text="Neutral" val={neutval} />
       <Display text="Bad" val={badval} />
@@ -64,8 +77,7 @@ const App = () => {
       <All gval={goodval} nval={neutval} bval={badval}/>
       <Average gval={goodval} nval={neutval} bval={badval}/>
       <Positive gval={goodval} nval={neutval} bval={badval}/>
-    </div>
-  )
+    </div>)  
 }
 
 export default App
