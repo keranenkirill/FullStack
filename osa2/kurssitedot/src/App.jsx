@@ -50,6 +50,7 @@ const Header = (props) => {
 
 const Content = (props) => {
   console.log(props)
+  /*2.3*: kurssitiedot step8*/
   const total = props.parts.reduce((sum, part) => sum + part.exercises, 0);
 
   return (
