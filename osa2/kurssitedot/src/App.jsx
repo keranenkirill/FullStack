@@ -71,6 +71,7 @@ const Part = (props) => {
   )
 }
 
+/*2.2: kurssitiedot step7*/
 const Total = (props) => {
   console.log(props)
   return (
