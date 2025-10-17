@@ -25,7 +25,7 @@ const App = (props) => {
     setNewPerson('add a new person')
     setNewPhonenum('add a new phone number')
   }
-
+  /*Tarkistaa onko sama puh nro jo luettelossa (tehtäväannossa oli nimen perusteella, keulin hieman)*/
   const ifExists = (num) => {
     console.log('ifexists', num)
     return persons.some(person => person.num === num)
@@ -42,13 +42,13 @@ const App = (props) => {
   }
   
 
-
+  /*henkilön puh nron lisäys tehty*/
   return (
     <div>
       <h2>Phonebook</h2>
       <form onSubmit={addPerson}>
         <input value={newPerson} onChange={handleNameChange}/>
-        <input value={newPhonenum} onChange={handleNumChange} />
+        <input value={newPhonenum} onChange={handleNumChange} /> 
         <button type="submit">add</button>
       </form>
       <h2>Names</h2>
