@@ -7,6 +7,7 @@ const App = (props) => {
   const [persons, setPersons] = useState(props.persons)
   const [newPerson, setNewPerson] = useState('add a new person')
   const [newPhonenum, setNewPhonenum] = useState('add a new phone number')
+  const [search, setSearch] = useState('')
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -40,6 +41,9 @@ const App = (props) => {
     /*console.log(event.target.value)*/
     setNewPhonenum(event.target.value)
   }
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value)
+  }
   
 
   /*henkilön puh nron lisäys tehty*/
@@ -52,10 +56,24 @@ const App = (props) => {
         <button type="submit">add</button>
       </form>
       <h2>Names</h2>
+      <div>
+        <h3>Search by name or phone number</h3>
+        <input 
+          value={search} 
+          onChange={handleSearchChange}
+          placeholder="Search names or phone numbers..."
+        />
+      </div>
+      
       <ul>
-        {persons.map(person =>
-          <Person key={person.id} person={person} />
-        )}
+        {persons
+          .filter(person => 
+            person.name.toLowerCase().startsWith(search.toLowerCase()) ||
+            person.num.startsWith(search)
+          )
+          .map(person =>
+            <Person key={person.id} person={person} />
+          )}
       </ul>
     </div>
   )

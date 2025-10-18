@@ -16,7 +16,29 @@ const persons = [
     id: 3,
     name: 'Jaakkomatti Tuhkimo',
     num: '040-1112223'
+  },
+  {
+    id: 4,
+    name: 'Kerttu Kettunen',
+    num: '050-3334445'
+  },
+  {
+    id: 5,
+    name: 'Olavi Ojalan',
+    num: '040-5556667'
+  },
+  {
+    id: 6,
+    name: 'Liisa Lahtinen',
+    num: '050-7778889'
+  },
+  {
+    id: 7,
+    name: 'Pekka Pouta',
+    num: '040-9990001'
   }
+
+
 ]
 
 ReactDOM.createRoot(document.getElementById('root')).render(
