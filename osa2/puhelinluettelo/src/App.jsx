@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Person from './components/Person'
+import Filter from './components/Filter'
 
 
 
@@ -44,7 +45,13 @@ const App = (props) => {
   const handleSearchChange = (event) => {
     setSearch(event.target.value)
   }
-  
+
+  const filteredPersons = () => {
+    return persons.filter(person => 
+      person.name.toLowerCase().startsWith(search.toLowerCase()) ||
+      person.num.startsWith(search)
+    )
+  }
 
   /*henkilön puh nron lisäys tehty*/
   return (
@@ -56,24 +63,12 @@ const App = (props) => {
         <button type="submit">add</button>
       </form>
       <h2>Names</h2>
-      <div>
-        <h3>Search by name or phone number</h3>
-        <input 
-          value={search} 
-          onChange={handleSearchChange}
-          placeholder="Search names or phone numbers..."
-        />
-      </div>
+      <Filter search={search} handleSearchChange={handleSearchChange} />
       
       <ul>
-        {persons
-          .filter(person => 
-            person.name.toLowerCase().startsWith(search.toLowerCase()) ||
-            person.num.startsWith(search)
-          )
-          .map(person =>
-            <Person key={person.id} person={person} />
-          )}
+        {filteredPersons().map(person =>
+          <Person key={person.id} person={person} />
+        )}
       </ul>
     </div>
   )
