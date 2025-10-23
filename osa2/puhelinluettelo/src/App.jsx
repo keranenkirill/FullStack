@@ -35,9 +35,12 @@ const App = () => {
       name: newPerson,
       num: newPhonenum,
     }
-    setPersons(persons.concat(personObject))
-    setNewPerson('add a new person')
-    setNewPhonenum('add a new phone number')
+
+    axios
+    .post('http://localhost:3001/persons', personObject)
+    .then(response => {
+      console.log(response)
+    })
   }
   /*Tarkistaa onko sama puh nro jo luettelossa (tehtäväannossa oli nimen perusteella, keulin hieman)*/
   const ifExists = (num) => {
