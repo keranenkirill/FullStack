@@ -1,6 +1,10 @@
-const Person = ({ person }) => {
-   console.log(person)
-  return <li>{person.name}: {person.num}</li>
-}
 
+const Person = ({ person, onDelete }) => {
+  return (
+    <li>
+      {person.name}: {person.num}
+      <button onClick={() => onDelete(person.id)}>delete</button>
+    </li>
+  )
+}
 export default Person

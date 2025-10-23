@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import Person from './components/Person'
 import Filter from './components/Filter'
+import PersonForm from './components/PersonForm'
+import personService from './services/persons'
+
 
 
 const App = () => {
@@ -12,11 +14,10 @@ const App = () => {
 
   useEffect(() => {
     console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
+    personService
+      .getAll()
+      .then(initialNotes => {
+        setPersons(initialNotes)
       })
   }, [])
   console.log('render', persons.length, 'notes')
@@ -29,25 +30,49 @@ const App = () => {
       alert(`Phonenumber ${newPhonenum} already exists in phonebook`)
       return
     }
+    else if (newPerson.trim() === '' || newPhonenum.trim() === '') {
+      alert('Name or phone number cannot be empty')
+      return
+    }
+    else if (newPerson === 'add a new person' || newPhonenum === 'add a new phone number') {
+      alert('Please enter a valid name and phone number')
+      return
+    }
     
     const personObject = {  //Lisää uusi henkilö puhelinluetteloo
-      id: persons.length + 1,
       name: newPerson,
       num: newPhonenum,
     }
 
-    axios
-    .post('http://localhost:3001/persons', personObject)
-    .then(response => {
-      console.log(response)
-    })
+    personService
+      .create(personObject)
+      .then(response => {
+        setPersons(persons.concat(response.data))
+        setNewPerson('')
+        setNewPhonenum('')
+      })
   }
+
+
   /*Tarkistaa onko sama puh nro jo luettelossa (tehtäväannossa oli nimen perusteella, keulin hieman)*/
   const ifExists = (num) => {
     console.log('ifexists', num)
     return persons.some(person => person.num === num)
   }
 
+  // Delete person handler
+  const handleDeletePerson = (id) => {
+    if (window.confirm('Delete this person?')) {
+      personService.deletePerson(id)
+        .then(() => {
+          console.log('Deleted person with id:', id)
+          setPersons(prevPersons => prevPersons.filter(person => person.id !== id))
+        })
+        .catch(() => {
+          alert('Error deleting person')
+        })
+    }
+  }
 
   const handleNameChange = (event) => {
     /*console.log(event.target.value)*/
@@ -60,7 +85,6 @@ const App = () => {
   const handleSearchChange = (event) => {
     setSearch(event.target.value)
   }
-
   const filteredPersons = () => {
     return persons.filter(person => 
       person.name.toLowerCase().startsWith(search.toLowerCase()) ||
@@ -68,21 +92,24 @@ const App = () => {
     )
   }
 
+
   /*henkilön puh nron lisäys tehty*/
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={addPerson}>
-        <input value={newPerson} onChange={handleNameChange}/>
-        <input value={newPhonenum} onChange={handleNumChange} /> 
-        <button type="submit">add</button>
-      </form>
+      <PersonForm 
+        addPerson={addPerson} 
+        newPerson={newPerson} 
+        handleNameChange={handleNameChange}
+        newPhonenum={newPhonenum}
+        handleNumChange={handleNumChange}
+      />
       <h2>Names</h2>
       <Filter search={search} handleSearchChange={handleSearchChange} />
       
       <ul>
         {filteredPersons().map(person =>
-          <Person key={person.id} person={person} />
+          <Person key={person.id} person={person} onDelete={handleDeletePerson} />
         )}
       </ul>
     </div>

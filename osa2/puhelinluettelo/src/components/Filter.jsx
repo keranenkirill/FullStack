@@ -10,5 +10,4 @@ const Filter = ({ search, handleSearchChange }) => {
     </div>
   )
 }
-
 export default Filter
