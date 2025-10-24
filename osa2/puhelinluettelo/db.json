@@ -1,3 +1,24 @@
 {
-  "persons": []
+  "persons": [
+    {
+      "id": "c433",
+      "name": "Jeper",
+      "num": "888888"
+    },
+    {
+      "id": "78e3",
+      "name": "Saku",
+      "num": "555555"
+    },
+    {
+      "id": "e6cd",
+      "name": "Seppo",
+      "num": "3434434"
+    },
+    {
+      "id": "11d7",
+      "name": "Andres",
+      "num": "90909090"
+    }
+  ]
 }

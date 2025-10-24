@@ -11,6 +11,22 @@ const App = () => {
   const [newPerson, setNewPerson] = useState('add a new person')
   const [newPhonenum, setNewPhonenum] = useState('add a new phone number')
   const [search, setSearch] = useState('')
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [goodMessage, setGoodMessage] = useState(null)
+
+  const Notification = ({ message, className }) => {
+    console.log('notification', message, className)
+    if (message === null) {
+      return null
+    }
+
+    return (
+      <div className={className}>
+        {message}
+      </div>
+    )
+  }
+  
 
   useEffect(() => {
     console.log('effect')
@@ -51,6 +67,12 @@ const App = () => {
         setNewPerson('')
         setNewPhonenum('')
       })
+      setGoodMessage(
+              `Person added: ${newPerson}`
+            )
+            setTimeout(() => {
+              setGoodMessage(null)
+            }, 5000)
   }
 
 
@@ -67,11 +89,23 @@ const App = () => {
         .then(() => {
           console.log('Deleted person with id:', id)
           setPersons(prevPersons => prevPersons.filter(person => person.id !== id))
+          setGoodMessage(
+              `Person deleted`
+            )
+            setTimeout(() => {
+              setGoodMessage(null)
+            }, 5000)
         })
-        .catch(() => {
-          alert('Error deleting person')
+        .catch(error => {
+          setErrorMessage(
+              `Error with deleting person`
+            )
+            setTimeout(() => {
+              setErrorMessage(null)
+            }, 5000)
         })
     }
+
   }
 
   const handleNameChange = (event) => {
@@ -97,6 +131,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification className="error" message={errorMessage} />
+      <Notification className="good" message={goodMessage}/>
       <PersonForm 
         addPerson={addPerson} 
         newPerson={newPerson} 
