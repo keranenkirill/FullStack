@@ -24,13 +24,22 @@ const persons = [
   }
 ]
 
+const date = new Date()
+
+
 app.get('/', (request, response) => {
-  response.send('<h1>Persons Book</h1>')
+
+  response.send(`
+    <p>Phonebook has info for ${persons.length} people</p>
+    <p>${date.toString()}</p>
+  `)
 })
 
 app.get('/api/persons', (request, response) => {
   response.json(persons)
 })
+
+
 
 const PORT = 3001
 app.listen(PORT, () => {
