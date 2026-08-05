@@ -1,5 +1,7 @@
 const express = require('express')
 const app = express()
+app.use(express.json())
+
 
 let persons = [
   {
@@ -25,6 +27,10 @@ let persons = [
 ]
 
 const date = new Date()
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
 
 
 app.get('/', (request, response) => {
@@ -56,6 +62,28 @@ app.get('/api/persons/:id', (request, response) => {
   } else {
     response.status(404).end()
   }
+})
+
+app.post('/api/persons', (request, response) => {
+  const body = request.body
+
+  if (!body.number || !body.name) {
+    return response.status(400).json({ 
+      error: 'content missing' 
+    })
+  }
+
+  const person = {
+    name: body.name,
+    number: body.number,
+    id: getRandomInt(1000000000),
+  }
+
+  persons = persons.concat(person)
+
+  console.log(person)
+  response.json(person)
+  console.log(request.headers)
 })
 
 
