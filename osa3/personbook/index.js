@@ -1,6 +1,7 @@
 const express = require('express')
-var morgan = require('morgan')
 const app = express()
+var morgan = require('morgan')
+
 
 app.use(express.json())
 app.use(morgan(':method :url HTTP/:http-version :status - :response-time ms'))
