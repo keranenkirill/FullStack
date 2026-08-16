@@ -4,7 +4,12 @@ var morgan = require('morgan')
 
 
 app.use(express.json())
-app.use(morgan(':method :url HTTP/:http-version :status - :response-time ms'))
+//custom token request bodylle
+morgan.token('body', (req) => {
+  return JSON.stringify(req.body)
+})
+app.use(morgan(':method :url HTTP/:http-version :status :body - :response-time ms'))
+
 
 
 let persons = [
@@ -95,9 +100,9 @@ app.post('/api/persons', (request, response) => {
 
   persons = persons.concat(person)
 
-  console.log(person)
+  //console.log(person)
   response.json(person)
-  console.log(request.headers)
+  //console.log(request.headers)
 })
 
 
